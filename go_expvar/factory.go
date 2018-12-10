@@ -2,12 +2,16 @@ package go_expvar
 
 import (
 	"expvar"
+	"fmt"
 	"github.com/MovieStoreGuy/polygraph"
 	"gopkg.in/yaml.v2"
+	"net/http"
 	"reflect"
 )
 
 type exporter struct {
+	Host string `yaml:"host"`
+	Port int    `yaml:"port"`
 }
 
 func NewExporter() polygraph.Exporter {
@@ -53,8 +57,7 @@ func (e *exporter) PublishStruct(ref interface{}) {
 }
 
 func (e *exporter) Start() error {
-
-	return nil
+	return http.ListenAndServe(fmt.Sprintf("%s:%d", e.Host, e.Port), nil)
 }
 
 func (e *exporter) PublishVariable(ref interface{}, label string) {
