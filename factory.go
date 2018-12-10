@@ -27,7 +27,6 @@ type Exporter interface {
 	//   // ...
 	PublishVariable(obj interface{}, label string)
 
-
 	// Start will ensure that the underlying metrics exporter
 	// is running based off the configuration set on the factory
 	Start() error

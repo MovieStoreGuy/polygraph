@@ -8,7 +8,6 @@ import (
 )
 
 type exporter struct {
-
 }
 
 func NewExporter() polygraph.Exporter {
@@ -21,7 +20,7 @@ func (e *exporter) Configure(data []byte) error {
 
 func (e *exporter) PublishStruct(ref interface{}) {
 	obj := reflect.ValueOf(ref)
-	if obj.Kind() != reflect.Ptr || obj.Elem().Kind() != reflect.Struct{
+	if obj.Kind() != reflect.Ptr || obj.Elem().Kind() != reflect.Struct {
 		return
 	}
 	obj = obj.Elem()
@@ -30,7 +29,7 @@ func (e *exporter) PublishStruct(ref interface{}) {
 		if !nested.CanAddr() || !nested.Addr().CanInterface() {
 			continue
 		}
-Check:
+	Check:
 		switch nested.Kind() {
 		case reflect.Map, reflect.Slice:
 			// Do nothing

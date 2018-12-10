@@ -26,8 +26,8 @@ func TestInsertingVariables(t *testing.T) {
 
 func TestInsertingBasicStruct(t *testing.T) {
 	type metricsBlob struct {
-		Version   int `polygraph:"application.version"`
-		Accessors int `polygraph:"application.accessors"`
+		Version   int    `polygraph:"application.version"`
+		Accessors int    `polygraph:"application.accessors"`
 		hidden    string `polygraph:"hidden"`
 	}
 	var (
@@ -43,7 +43,7 @@ func TestInsertingBasicStruct(t *testing.T) {
 	if v := expvar.Get("hidden"); v != nil {
 		t.Fatal("expvar has a hidden variable published")
 	}
-	for ; m.Accessors < 10 ; m.Accessors++ {
+	for ; m.Accessors < 10; m.Accessors++ {
 		v := expvar.Get("application.accessors")
 		if v == nil {
 			t.Fatal(`"application.accessors" was not registered correctly in expvar`)
@@ -65,9 +65,9 @@ func TestPassingNil(t *testing.T) {
 
 func TestNestedComplexStructures(t *testing.T) {
 	type metricsBlob struct {
-		IndirectCount *int `polygraph:"indirect.count"`
-		NotSet *float32  `polygraph:"not.set"`
-		Nested struct {
+		IndirectCount *int     `polygraph:"indirect.count"`
+		NotSet        *float32 `polygraph:"not.set"`
+		Nested        struct {
 			Accessed int `polygraph:"nested.accessor"`
 		}
 	}
@@ -78,7 +78,7 @@ func TestNestedComplexStructures(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		(*m.IndirectCount) = i*2 + 1
 		m.Nested.Accessed = i
-		if v := expvar.Get("indirect.count"); v == nil || v.String() != fmt.Sprint((i*2 + 1)) {
+		if v := expvar.Get("indirect.count"); v == nil || v.String() != fmt.Sprint((i*2+1)) {
 			t.Fatal(`"indirect.count" was not set correctly`)
 		}
 		if v := expvar.Get("nested.accessor"); v == nil || v.String() != fmt.Sprint(i) {

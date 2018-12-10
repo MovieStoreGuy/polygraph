@@ -14,7 +14,6 @@ func (m *morph) Set(obj interface{}, metricName string) {
 	m.variable = reflect.Indirect(reflect.ValueOf(obj))
 }
 
-
 func (m *morph) String() string {
 	return fmt.Sprint(m.variable)
 }
