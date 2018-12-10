@@ -1,6 +1,9 @@
 package go_expvar
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 type morph struct {
 	variable interface{}
@@ -8,7 +11,7 @@ type morph struct {
 
 func (m *morph) Set(obj interface{}, metricName string) {
 	_ = metricName
-	m.variable = obj
+	m.variable = reflect.Indirect(reflect.ValueOf(obj))
 }
 
 

@@ -1,5 +1,6 @@
 package polygraph
 
+
 // Morph allows you to take your implemented non complex type
 // and be able to export to your target metric platform
 type Morph interface {
