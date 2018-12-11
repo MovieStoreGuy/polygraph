@@ -30,12 +30,12 @@ func (e *exporter) PublishStruct(ref interface{}) {
 	obj = obj.Elem()
 	for i := 0; i < obj.NumField(); i++ {
 		nested := obj.Field(i)
-		if !nested.CanAddr() || !nested.Addr().CanInterface() {
+		if !nested.IsValid() || !nested.CanAddr() || !nested.Addr().CanInterface() {
 			continue
 		}
 	Check:
 		switch nested.Kind() {
-		case reflect.Map, reflect.Slice:
+		case reflect.Map, reflect.Slice, reflect.Invalid:
 			// Do nothing
 		case reflect.Ptr:
 			if !nested.IsValid() || !nested.Addr().CanInterface() {
@@ -61,7 +61,7 @@ func (e *exporter) Start() error {
 }
 
 func (e *exporter) PublishVariable(ref interface{}, label string) {
-	if ref != nil {
+	if ref == nil {
 		return
 	}
 	metric := &morph{}
